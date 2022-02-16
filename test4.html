@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/common.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/components.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/bank.css">
+    <style>
+        .testbox {
+            margin-top: 3rem;
+            padding: 0 1rem;
+        }
+
+        .anidots {
+            width: 1rem;
+            height: 1rem;
+            background-color: #009591;
+            border-radius: 50%;
+            position: absolute;
+            top: 2.5rem;
+            right: 0;
+            opacity: 0;
+        }
+
+        .anidots.is-active {
+            animation: dotsanitest 1s ease-in 1 both;
+        }
+
+        @keyframes dotsanitest {
+            from {
+                transform: translateX(100%);
+            }
+
+            30% {
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(calc(-100vw + 2rem));
+                opacity: 1;
+            }
+        }
+
+
+        .tit-testbox {
+            margin: 0 -1rem 0;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            font-size: 1.6rem;
+        }
+
+        .tit-testbox span {
+            display: block;
+            padding: 0 1rem;
+            background-color: white;
+        }
+
+        .testbox1 {margin-top:27rem;}
+        .banner {z-index:1000;position:fixed;width:100%;top:1rem;right:0;left:0;margin-top:0;transition: all .3s;}
+        .banner .inner {transform-origin: top center;}
+        .banner .inner {
+            height: 24rem;
+            background-color: darkorange;
+            border-radius: 2rem;
+            
+        }
+
+        .card-testbox {
+            height: 30rem;
+            background-color: #009591;
+            transform: translateY(5rem);
+            transition: all 2s;
+        }
+
+        .is-active .card-testbox {
+            transform: translateY(1rem);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" class="wrap">
+        <div>
+            <section class="testbox banner">
+                <div class="inner"></div>
+                <span class="anidots"></span>
+            </section>
+            <section class="testbox testbox1">
+                <h2 class="tit-testbox"><span>타이틀1</span></h2>
+                <div class="card-testbox"></div>
+            </section>
+            <section class="testbox testbox2">
+                <h2 class="tit-testbox"><span>타이틀2</span></h2>
+                <div class="card-testbox"></div>
+            </section>
+            <section class="testbox testbox3">
+                <h2 class="tit-testbox"><span>타이틀3</span></h2>
+                <div class="card-testbox"></div>
+            </section>
+            <section class="testbox testbox4">
+                <h2 class="tit-testbox"><span>타이틀4</span></h2>
+                <div class="card-testbox"></div>
+            </section>
+            <section class="testbox testbox5">
+                <h2 class="tit-testbox"><span>타이틀5</span></h2>
+                <div class="card-testbox"></div>
+            </section>
+        </div>
+    </div>
+</body>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/jquery/jquery-3.4.1.min.js"></script>
+<script>
+    function addViewportEvent(e, i) {
+        var t = "scroll.addViewportEvent load.addViewportEvent resize.addViewportEvent";
+        if (e = $.extend({
+            parent: window,
+            triggerPosition: !1,
+            triggerPositionPercent: !1,
+            enter: !1,
+            leave: !1,
+            visiblePercent: !1,
+            visible: !1,
+            invisible: !1
+        }, e || {}),
+            "number" == typeof (e.triggerPosition && e.triggerPositionPercent))
+            return !0;
+        $.fn.extend({
+            destroy: function () {
+                $(e.parent).off(t)
+            }
+        });
+        return i.each(function (i, r) {
+            var n = !1
+                , o = !1
+                , s = !1
+                , g = e.parent;
+            $(g).on(t, function () {
+                var i = {
+                    Height: $(r).outerHeight(),
+                    ViewportHeight: $(g).height(),
+                    ScrollTop: $(document).scrollTop(),
+                    OffsetTop: $(r).offset().top
+                }
+                    , t = ((i.ScrollTop + i.ViewportHeight - i.OffsetTop) / i.Height * 100).toFixed(2)
+                    , l = -((i.ScrollTop - i.OffsetTop - i.Height) / i.Height * 100).toFixed(2)
+                    , c = i.OffsetTop - i.ScrollTop - e.triggerPosition
+                    , v = (c / i.ViewportHeight * 100 - e.triggerPositionPercent).toFixed(2);
+                o = t >= 0 && l >= 0,
+                    v >= 50 ? v = 50 : -50 >= v && (v = -50),
+                    o && 100 >= t ? visiblePercent = t : o && 100 >= l ? visiblePercent = l : o ? visiblePercent = 100 : visiblePercent = 0,
+                    o && (r.isVisible = o,
+                        r.isEnter = n,
+                        r.viewPortPositionPercent = v,
+                        r.viewPortPosition = c,
+                        r.visiblePercent = visiblePercent),
+                    o && ((!n && e.triggerPositionPercent !== !1 && 0 >= v || e.triggerPosition && 0 >= c) && ($(r).trigger("enter"),
+                        $.isFunction(e.enter) && e.enter()),
+                        (n && e.triggerPositionPercent !== !1 && v > 0 || e.triggerPosition && c > 0) && ($(r).trigger("leave"),
+                            $.isFunction(e.leave) && e.leave())),
+                    !s && visiblePercent > 0 && ($(r).trigger("visible"),
+                        $.isFunction(e.visible) && e.visible()),
+                    s && 0 == visiblePercent && ($(r).trigger("invisible"),
+                        $.isFunction(e.invisible) && e.invisible(),
+                        $(r).trigger("leave"),
+                        $.isFunction(e.leave) && e.leave()),
+                    $.isFunction(e.visiblePercent) && e.visiblePercent(Number(visiblePercent), i),
+                    s = 0 != visiblePercent,
+                    n = e.triggerPositionPercent && 0 >= v && o || e.triggerPosition && 0 >= c && o
+            })
+        })
+    }
+    var scrollTarget = $('.testbox');
+    $.each(scrollTarget, function (i, el) {
+        addViewportEvent({
+            triggerPositionPercent: 60,
+            enter: function () {
+                $(el).addClass('is-active');
+            },
+            leave: function () {
+                $(el).removeClass('is-active');
+            }
+        }, $(el));
+    })
+
+    $(function () {
+        // setTimeout(function () {
+        //     $('.anidots').addClass('is-active');
+        // }, 2000)
+
+
+        // $('.anidots').on('animationend', function () {
+        //     var testoffset = $('.testbox1').offset().top;
+        //     var scroll = $(window).scrollTop();
+        //     if (scroll < testoffset) {
+        //         $('body,html').delay(700).animate({ 'scrollTop': testoffset }, "slow")
+        //     } else {
+        //         return;
+        //     }
+
+        // })
+        
+        var previousScroll = 0;
+
+        $(window).on('scroll', function (e) {
+            var top = $(this).scrollTop();
+            var el = $('.banner .inner');
+            var sec01 = $('.testbox1').offset().top;
+            var after = afterscale(top);
+            var dir;
+
+            if (top < previousScroll){
+                dir = 'up';
+            } else {
+                dir = 'down';
+            }
+            previousScroll = top;
+
+            if(dir == 'down'){
+                el.css({transform: 'scale(' + after + ')'});
+                if(after == 0.1) {
+                    $('.banner').css({'transform':'translateX(calc(50% - '+ el.width()*0.05 +'px - 1em))'});
+                } 
+            } else {
+                if(top <= sec01){
+                    $({ translateX: 'calc(50% - '+el.width()*0.1+'px - 1rem)' }).animate({ translateX: 0}, {
+                        duration: 150,
+                        step: function (now) {
+                            $('.banner').css({
+                                transform: 'translateX(' + now + ')'
+                            });
+                        },
+                        complete : function(){
+                            el.css({transform: 'scale(' + after + ')'});
+                        }
+                    });
+                }
+               
+            }
+
+            
+           
+        })
+ 
+        function afterscale(top) {
+            var section = $('.banner').height();
+            var value = 1 - (top / section);
+            var value2 = value > 0.1 ? value : 0.1
+            return value2;
+     
+        }
+
+    })
+</script>
+
+</html>
