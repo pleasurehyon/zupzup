@@ -31,7 +31,7 @@
 
 <body>
     <main id="wrap">
-        <canvas id="drawing_canvas"></canvas>
+        <canvas id="drawing_canvas" width="1024" height="700"></canvas>
         <img src="heart01.png" alt="" width="17" style="display:block;width:17px;margin-top:350px">
     </main>
 
@@ -41,8 +41,8 @@
 <script>
 
     // canvas settings
-    var viewWidth = 512,
-        viewHeight = 350,
+    var viewWidth = 1024,
+        viewHeight = 700,
         imageSrc = ['heart01.png', 'bg_slide2.png', 'heart03.png', 'bg_slide.png', 'heart01.png'],
         drawingCanvas = document.getElementById("drawing_canvas"),
         ctx,
@@ -62,8 +62,8 @@
         this.time = 0;
         this.duration = 3 + Math.random() * 2;
         this.imgrandom = parseInt(Math.random() * imageSrc.length);
-        this.w = 60;
-        this.h = 60;
+        this.w = 90;
+        this.h = 90;
     };
 
     Particle.prototype = {
@@ -91,8 +91,6 @@
     };
 
     function initDrawingCanvas() {
-        drawingCanvas.width = viewWidth;
-        drawingCanvas.height = viewHeight;
         ctx = drawingCanvas.getContext('2d');
     }
 
