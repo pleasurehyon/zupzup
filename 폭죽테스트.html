@@ -45,7 +45,7 @@
         viewHeight = 700,
         imageSrc = ['heart01.png', 'bg_slide2.png', 'heart03.png', 'bg_slide.png', 'heart02.png'],
         drawingCanvas = document.getElementById("drawing_canvas"),
-        ctx,
+        ctx = drawingCanvas.getContext('2d'),
         timeStep = (1 / 60),
         particles = [];
 
@@ -60,7 +60,7 @@
         this.p2 = p2;
         this.p3 = p3;
         this.time = 0;
-        this.duration = 3 + Math.random() * 2;
+        this.duration = 2 + Math.random() * 2;
         this.imgrandom = parseInt(Math.random() * imageSrc.length);
         this.w = 51;
         this.h = 51;
@@ -74,7 +74,7 @@
             var dx = p.x - this.x;
             var dy = p.y - this.y;
             this.r = Math.atan2(dy, dx) + Math.PI * 0.5;
-            this.sy = Math.sin(Math.PI * f * 10);
+            this.sy = Math.sin(Math.PI * f * 5);
             this.x = p.x;
             this.y = p.y;
         },
@@ -90,13 +90,9 @@
         }
     };
 
-    function initDrawingCanvas() {
-        ctx = drawingCanvas.getContext('2d');
-    }
-
     function createParticles() {
-        for (var i = 0; i < 50; i++) {
-            var p0 = new Point(viewWidth * 0.5, viewHeight * 0.5); // {x:,y:}
+        for (var i = 0; i < 40; i++) {
+            var p0 = new Point(viewWidth * 0.5, viewHeight * 0.5); 
             var p1 = new Point(Math.random() * viewWidth, Math.random() * viewHeight);
             var p2 = new Point(Math.random() * viewWidth, Math.random() * viewHeight);
             var p3 = new Point(Math.random() * viewWidth, viewHeight + 64);
@@ -114,7 +110,6 @@
     }
 
     window.onload = function () {
-        initDrawingCanvas();
         createParticles();
         requestAnimationFrame(loop);
     };
