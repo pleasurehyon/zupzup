@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/common.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/components.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/bank.css">
+    <style>
+       .multiple {margin:10px;}
+       .multiple h3 {width:200px;height:200px;background-color: antiquewhite;}
+    </style>
+</head>
+
+<body>
+    <div class="z"></div>
+    <div class="slider single-item">
+        <div class="multiple"><h3>1</h3></div>
+        <div class="multiple"><h3>2</h3></div>
+        <div class="multiple"><h3>3</h3></div>
+        <div class="multiple"><h3>4</h3></div>
+        <div class="multiple"><h3>5</h3></div>
+        <div class="multiple"><h3>6</h3></div>
+    </div>
+
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/slick/slick.js"></script>
+    <!-- <script src="slick.js"></script> -->
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/dnd/touch-dnd.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/pualugin.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/common.js"></script>
+    <script>
+        var slider = $('.single-item');
+        slider.slick({
+            dots : false,
+            autoplay: true,
+            autoplaySpeed : 0,
+            speed : 2000,
+            infinite : true,
+            variableWidth : true,
+            centerMode : true,
+            cssEase: "linear",
+        });
+        slider[0].slick.focussed = false;
+   
+        slider.on('swipe', function(){
+            slider.slick("slickSetOption", 'autoplay', false, true);
+            for (i = 0; i < slider[0].slick.autoPlayTimer; i++) {
+                window.clearInterval(i);
+            }
+            slider.slick("slickSetOption", 'speed', 0, true);
+            slider.slick("slickSetOption", 'waitForAnimate', false, false);
+            slider.slick("slickGoTo", $('.single-item').slick('slickCurrentSlide'));
+        });
+        
+        slider.on('afterChange', function(e, s, c) {
+            slider.slick("slickSetOption", 'autoplay', true);
+            slider.slick("slickSetOption", 'speed', 2000, true);
+            slider.slick("slickSetOption", 'waitForAnimate', true, false);
+        });
+    </script>
+</body>
+
+</html>
