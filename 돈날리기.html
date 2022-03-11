@@ -190,6 +190,7 @@
             ctx = drawingCanvas.getContext('2d'),
             timeStep = (1 / 60),
             particles = [];
+            rafState = false;
 
         $('#drawing_canvas').attr('height', viewHeight)
 
@@ -221,6 +222,7 @@
                 this.sy = Math.sin(Math.PI * f * 5);
                 this.x = p.x;
                 this.y = p.y;
+                //console.log(p)
             },
             draw: function () {
                 var imageObj = new Image();
@@ -250,7 +252,12 @@
                 p.update();
                 p.draw();
             });
-            requestAnimationFrame(loop);
+            if(!rafState) {
+                requestAnimationFrame(loop);
+            }
+            setTimeout(function () {
+                rafState = true;
+            },5000)
         }
 
         createParticles();
