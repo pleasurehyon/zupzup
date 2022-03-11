@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/common.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/components.css">
+    <style>
+        main {
+            width: 1005;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .roulette_area {
+            display: table;
+            width: 100%;
+            text-align: center;
+        }
+
+        .roulette_box {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .roulette_center {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+            margin: 13.88889% 0 0 4.16667%
+        }
+
+        .btn_start {
+            display: block;
+            width: 40.27778%;
+            margin: 25% 0 0 25%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        img {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .roll_bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 88.88889%;
+        }
+    </style>
+</head>
+
+<body>
+    <main id="wrap">
+        <div class="roulette_area">
+            <div class="roulette_box">
+                <div class="roulette_center">
+                    <a href="javascript:;" class="btn_start"><img
+                            src="https://www.adqua.co.kr/ux/ixkfo86/test/roulette/img/btn_start.png" alt="버튼"></a>
+                    <img src="https://www.adqua.co.kr/ux/ixkfo86/test/roulette/img/roll_bg.png" class="roll_bg"
+                        alt="룰렛이미지">
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/jquery/jquery-3.4.1.min.js"></script>
+<script>
+    var _btnStart = $('.btn_start');
+    var _roll_bg = $('.roll_bg');
+    var _items = ["포인트 30P", "할인쿠폰 10%", "무료반품 FREE", "할인쿠폰 30%", "선물쿠폰 1+1", "할인쿠폰 20%", "더블적립 x2", "결제금액 100% 페이백"];
+    var _mtime = 1;
+
+
+    function spinMotion() {
+        var randomdeg = randomValue()
+        var angle = 360 / _items.length;
+        var data = randomdeg * angle;
+
+        $({ deg: 0 }).animate({ deg: 1080 + data}, {
+            duration: 2000,
+            step: function (now) {
+                _roll_bg.css({
+                    transform: 'rotate(' + now + 'deg)'
+                });
+            },
+            complete : function(){
+                alert(`${_items[randomdeg]} 당첨`)
+            }
+        });
+    }
+
+    function randomValue() {
+        return parseInt(Math.random() * _items.length); // 0 ~ 7
+    }
+
+    $(document).ready(function () {
+        _btnStart.on('click', spinMotion)
+    });
+
+
+
+</script>
+
+</html>
