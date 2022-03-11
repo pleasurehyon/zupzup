@@ -185,7 +185,7 @@
         // canvas settings
         var viewWidth = 1024,
             viewHeight = $(window).height() * 2,
-            //imageSrc = ['heart01.png', 'bg_slide2.png', 'heart03.png', 'bg_slide.png', 'heart02.png'],
+            imageSrc = ['1dallar.png', '2dallar.png'],
             drawingCanvas = document.getElementById("drawing_canvas"),
             ctx = drawingCanvas.getContext('2d'),
             timeStep = (1 / 60),
@@ -205,9 +205,9 @@
             this.p3 = p3;
             this.time = 0;
             this.duration = 1 + Math.random() * 2;
-            //this.imgrandom = parseInt(Math.random() * imageSrc.length);
-            this.w = 131;
-            this.h = 64;
+            this.imgrandom = parseInt(Math.random() * imageSrc.length);
+            this.w = 152;
+            this.h = 105;
         };
 
         Particle.prototype = {
@@ -224,7 +224,7 @@
             },
             draw: function () {
                 var imageObj = new Image();
-                imageObj.src = '4dallar.png';
+                imageObj.src = imageSrc[this.imgrandom];
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.r);
@@ -235,7 +235,7 @@
         };
 
         function createParticles() {
-            for (var i = 0; i < 30; i++) {
+            for (var i = 0; i < 40; i++) {
                 var p0 = new Point(viewWidth * 0.5, viewHeight * 0.5);
                 var p1 = new Point(Math.random() * viewWidth, Math.random() * viewHeight);
                 var p2 = new Point(Math.random() * viewWidth, Math.random() * viewHeight);
