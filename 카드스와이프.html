@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/common.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/components.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/bank.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        body {
+            box-sizing: border-box;
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            background: #404449;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper-container {
+            margin: 20px;
+        }
+
+        .swiper-container-free-mode>.swiper-wrapper {
+            transition-timing-function: linear;
+        }
+
+        .swiper-slide {
+            overflow: hidden;
+            height: 120px;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .swiper-slide:nth-child(even) {
+            -webkit-animation-name: up;
+            animation-name: up;
+            -webkit-animation-duration: 4s;
+            animation-duration: 4s;
+            -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+        }
+
+        .swiper-slide:nth-child(odd) {
+            -webkit-animation-name: down;
+            animation-name: down;
+            -webkit-animation-duration: 4s;
+            animation-duration: 4s;
+            -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes up {
+            0% {
+                -webkit-transform: translateY(20px);
+                transform: translateY(20px)
+            }
+
+            25% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0)
+            }
+
+            50% {
+                -webkit-transform: translateY(-20px);
+                transform: translateY(-20px)
+            }
+
+            75% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0)
+            }
+
+            100% {
+                -webkit-transform: translateY(20px);
+                transform: translateY(20px)
+            }
+        }
+
+        @keyframes down {
+            0% {
+                -webkit-transform: translateY(-20px);
+                transform: translateY(-20px)
+            }
+
+            25% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0)
+            }
+
+            50% {
+                -webkit-transform: translateY(20px);
+                transform: translateY(20px)
+            }
+
+            75% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0)
+            }
+
+            100% {
+                -webkit-transform: translateY(-20px);
+                transform: translateY(-20px)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="swiper-container swiper-container-free-mode">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"
+                style="background-image:url(http://cs412624.vk.me/v412624691/4117/RWBNZL6CLtU.jpg)"></div>
+            <div class="swiper-slide"
+                style="background-image:url(http://cs412624.vk.me/v412624691/41ad/atM6w55Z9Xg.jpg)"></div>
+            <div class="swiper-slide"
+                style="background-image:url(https://pp.userapi.com/c836139/v836139003/63ce1/QThPx7qPzvU.jpg)"></div>
+            <div class="swiper-slide"
+                style="background-image:url(https://pp.userapi.com/c412624/v412624691/4136/_da_uAA6ha8.jpg)"></div>
+            <div class="swiper-slide"
+                style="background-image:url(https://pp.userapi.com/c637331/v637331691/48f5f/spHnV42iYVw.jpg)"></div>
+            <div class="swiper-slide"
+                style="background-image:url(https://pp.userapi.com/c837139/v837139407/67f52/fFqjq4U2mEk.jpg)"></div>
+            <div class="swiper-slide"
+                style="background-image:url(http://cs412624.vk.me/v412624691/415d/X7YuVilSl4k.jpg)"></div>
+        </div>
+    </div>
+
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/pualugin.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/common.js"></script>
+    <script>
+        $(function () {
+
+            var swiperOptions = {
+                spaceBetween: 20,
+                loop: true,
+                autoplay: {
+                  delay: 1,
+                  disableOnInteraction: false
+                },
+                slidesPerView: 'auto',
+                speed: 2000,
+                grabCursor: true,
+                mousewheelControl: true,
+                keyboardControl: true,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev"
+                }
+            };
+
+            var swiper = new Swiper(".swiper-container", swiperOptions);
+        })
+
+        function fxTimerFunc() {
+            var time = 5;
+            var timer = function () {
+                $('.time span').text(time);
+                if (time === 3) {
+                    modalCtrl.open();
+                }
+                if (time === 0) {
+                    modalCtrl.close();
+                }
+                time--;
+            }
+            var refreshTimer = setInterval(timer, 1000);
+
+
+            var modalCtrl = {
+                open: function () {
+                    $('.button--positive').trigger('click');
+                },
+                close: function () {
+                    $('.modal__btn--close').trigger('click');
+                    clearInterval(refreshTimer);
+                }
+            }
+
+            $('.btn_time').on('click', function () {
+                modalCtrl.close();
+                fxTimerFunc();
+            })
+        }
+        fxTimerFunc();
+
+
+
+    </script>
+</body>
+
+</html>
