@@ -16,19 +16,25 @@
     <style>
         .particle-wrap {
             width: 100vw;
-            height: 100vh;
+            height: 26vh;
             position:fixed;
-            bottom:0;
+            top: 6rem;
             right:0;
             left:0;
         }
-
         .particle {
             position: absolute;
             top: 0;
             left: 0;
-            width: 60px;
-            height: 60px;
+            width: 30px;
+            height: 30px;
+            animation-name: test;
+            animation-duration: 1.2s;
+            animation-fill-mode: both;
+        }
+        @keyframes test {
+            0%, 50% {opacity:1}
+            100% {opacity:0;}
         }
     </style>
 </head>
@@ -139,6 +145,7 @@
                     </ul>
                 </div>
             </div>
+
             <div class="container flex">
                 <button type="button" class="btn-share" data-element="modal__open" data-target="#sharePopup"><span
                         class="btn-share__text">공유하기</span></button>
@@ -177,56 +184,58 @@
 
     <!-- 공통 script -->
     <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/jquery/jquery-3.4.1.min.js"></script>
-    <!-- <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/slick/slick.js"></script>
-<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/dnd/touch-dnd.js"></script>
-<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/pualugin.js"></script>
-<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/common.js"></script> -->
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/slick/slick.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/dnd/touch-dnd.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/pualugin.js"></script>
+    <script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/common.js"></script>
 </body>
 <script>
     let particles = [];
     let particleWrap;
+    let particleLen = 20;
     function pop() {
-        document.querySelector('body,html').style.overflow = 'hidden';
+        //document.querySelector('body,html').style.overflow = 'hidden';
         particleWrap = document.createElement('div');
         particleWrap.classList.add('particle-wrap');
-        document.querySelector('#content').append(particleWrap)
-        for (let i = 0; i < 50; i++) {
+        document.querySelector('#content').append(particleWrap);
+        for (let i = 0; i < particleLen; i++) {
             const p = document.createElement('span');
             p.classList.add('particle');
             p.x = window.innerWidth * 0.5;
-            p.y = window.innerHeight + (Math.random() * window.innerHeight * 0.3);
+            p.y = (Math.random() * window.innerHeight * 0.3);
             p.vel = {
                 x: (Math.random() - 0.5) * 8,
-                y: Math.random() * - 30
+                y: Math.random() * - 10
             };
             p.mass = Math.random() * 0.2 + 0.5;
+
             particles.push(p);
             p.style.transform = `translate(${p.x}px, ${p.y}px)`;
-            const size = Math.random() * 60;
-            p.style.width = 40 + 'px';
-            p.style.height = 40 + 'px';
-            p.style.background = 'url(dallar3.png) no-repeat 0 0 / 100%';
+            p.style.width = 30 + 'px';
+            p.style.height = 30 + 'px';
+            var random = Math.floor(8 * Math.random()) + 1;
+            p.style.background = 'url(icon_anim_coin'+ random + '.png) no-repeat 0 0 / 100%';
             particleWrap.append(p);
         }
     } 
  
     function render() {
-        for (let i = particles.length - 1; i--; i > -1) {
+        for (let i = particles.length - 1; i--; i >= 0) {
             const p = particles[i];
             p.style.transform = `translate3d(${p.x}px, ${p.y}px, 1px)`;
             p.x += p.vel.x;
             p.y += p.vel.y;
             p.vel.y += (1 * p.mass);
-            if (p.y > (window.innerHeight * 2)) {
+            if (p.y > window.innerHeight) {
                 p.remove();
-                particles.splice(i, 1);
+                //particles.splice(i, 1);
             }
         }
         requestAnimationFrame(render);
         $('.particle:last').hide();
         setTimeout(function () {
-            document.querySelector('body,html').style.overflow = 'visible';
-            particleWrap.remove();
+            //document.querySelector('body,html').style.overflow = 'visible';
+            //particleWrap.remove();
         }, 3000)
     } 
 
