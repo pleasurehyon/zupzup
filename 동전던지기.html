@@ -16,7 +16,7 @@
     <style>
         .particle-wrap {
             width: 100vw;
-            height: 26vh;
+            height: 50vh;
             position:fixed;
             top: 6rem;
             right:0;
@@ -29,7 +29,7 @@
             width: 30px;
             height: 30px;
             animation-name: test;
-            animation-duration: 1.2s;
+            animation-duration: 1.5s;
             animation-fill-mode: both;
         }
         @keyframes test {
@@ -194,7 +194,6 @@
     let particleWrap;
     let particleLen = 20;
     function pop() {
-        //document.querySelector('body,html').style.overflow = 'hidden';
         particleWrap = document.createElement('div');
         particleWrap.classList.add('particle-wrap');
         document.querySelector('#content').append(particleWrap);
@@ -202,18 +201,19 @@
             const p = document.createElement('span');
             p.classList.add('particle');
             p.x = window.innerWidth * 0.5;
-            p.y = (Math.random() * window.innerHeight * 0.3);
+            p.y = Math.random() * window.innerHeight * 0.3;
             p.vel = {
                 x: (Math.random() - 0.5) * 8,
-                y: Math.random() * - 10
+                y: Math.random() * -10
             };
-            p.mass = Math.random() * 0.2 + 0.5;
-
+            p.mass = Math.random() * 0.2 + 0.4;
             particles.push(p);
-            p.style.transform = `translate(${p.x}px, ${p.y}px)`;
-            p.style.width = 30 + 'px';
-            p.style.height = 30 + 'px';
+            var size = [10,20,30,40];
             var random = Math.floor(8 * Math.random()) + 1;
+            var random2 = Math.floor(size.length * Math.random()) + 1;
+            p.style.transform = `translate(${p.x}px, ${p.y}px)`;
+            p.style.width = size[random2] + 'px';
+            p.style.height = size[random2] + 'px';
             p.style.background = 'url(icon_anim_coin'+ random + '.png) no-repeat 0 0 / 100%';
             particleWrap.append(p);
         }
@@ -225,25 +225,19 @@
             p.style.transform = `translate3d(${p.x}px, ${p.y}px, 1px)`;
             p.x += p.vel.x;
             p.y += p.vel.y;
-            p.vel.y += (1 * p.mass);
+            p.vel.y += p.mass;
             if (p.y > window.innerHeight) {
                 p.remove();
-                //particles.splice(i, 1);
             }
         }
+        particleWrap.lastChild.style.display = 'none';
         requestAnimationFrame(render);
-        $('.particle:last').hide();
-        setTimeout(function () {
-            //document.querySelector('body,html').style.overflow = 'visible';
-            //particleWrap.remove();
-        }, 3000)
     } 
 
     window.addEventListener('load', function () {
         pop();
         render();
     });
-
 </script>
 
 </html>
