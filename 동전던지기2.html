@@ -29,7 +29,7 @@
             width: 30px;
             height: 30px;
             animation-name: test;
-            animation-duration: 1.6s;
+            animation-duration: 2s;
             animation-fill-mode: both;
         }
         @keyframes test {
@@ -204,11 +204,11 @@
             p.y = Math.random() * window.innerHeight * 0.3;
             p.rotate = 0;
             p.vel = {
-                x: (Math.random() - 0.5) * 8,
+                x: (Math.random() - 0.5) * 5,
                 y: Math.random() * -10,
-                rotate : Math.random() * 10,
+                rotate : Math.random() * 6,
             };
-            p.mass = Math.random() * 0.2 + 0.3;
+            p.mass = Math.random() * 0.2 + 0.35;
             particles.push(p);
             var size = [15,20,30,40];
             var random = Math.floor(8 * Math.random()) + 1;
