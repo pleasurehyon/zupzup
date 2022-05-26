@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/common.css">
+    <link rel="stylesheet" href="https://dev12-mbp.hanabank.com:18080/pub/resource/css/components.css">
+    <style>
+        body,html {overflow: hidden;}
+        #wrap {overflow: hidden;}
+        .test {width:100vw;height:100vh;overflow:hidden;}
+        particule {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <main id="wrap">
+        <div class="test"></div>
+    </main>
+
+
+</body>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/jquery/jquery-3.4.1.min.js"></script>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/jquery/jquery-3.4.1.min.js"></script>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/slick/slick.js"></script>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/library/dnd/touch-dnd.js"></script>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/pualugin.js"></script>
+<script src="https://dev12-mbp.hanabank.com:18080/pub/resource/js/ui/common.js"></script>
+<script>
+    let particles = [];
+    function pop () {
+    for (let i = 0; i < 70; i++) {
+        const p = document.createElement('particule');
+        p.x = window.innerWidth * 0.5;
+        p.y = window.innerHeight + (Math.random() * window.innerHeight * 0.3);
+        p.vel = {
+        x: (Math.random() - 0.5) * 10,
+        y: Math.random() * -20 - 15
+        };
+        p.mass = Math.random() * 0.2 + 0.8;
+        particles.push(p);
+        p.style.transform = `translate(${p.x}px, ${p.y}px)`;
+        const size = Math.random() * 15 + 5;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.background = 'url(heart01.png) no-repeat 0 0 / 100%'
+        document.querySelector('.test').appendChild(p);
+    }
+    }
+
+    function render () {
+    for (let i = particles.length - 1; i--; i > -1) {
+        const p = particles[i];
+        p.style.transform = `translate3d(${p.x}px, ${p.y}px, 1px)`;
+        
+        p.x += p.vel.x;
+        p.y += p.vel.y;
+        
+        p.vel.y += (0.5 * p.mass);
+        if (p.y > (window.innerHeight * 2)) {
+        p.remove();
+        particles.splice(i, 1);
+        }
+    }
+    requestAnimationFrame(render);
+    }
+    pop();
+    window.setTimeout(render, 700);
+    window.addEventListener('click', pop);
+</script>
+
+</html>
