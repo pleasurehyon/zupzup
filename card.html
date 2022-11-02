@@ -87,12 +87,12 @@ html{overflow:hidden;font-size:10px;scroll-behavior:smooth;}
                     conts.removeClass('card_open card_control');
                 })
             }
-            var touchStart = function(){
+            self.touchStart = function(){
                 $('.card_cont').off('touchstart').on('touchstart', function(e){
                     start_Y = e.originalEvent.touches[0].clientY;
                 })
             }
-            var touchMove = function(){
+            self.touchMove = function(){
                 $('.card_cont').off('touchmove').on('touchmove', function(e){
                     move_Y = e.originalEvent.touches[0].clientY;
                     if(!$('.card_cont').hasClass('card_open')){
@@ -114,7 +114,7 @@ html{overflow:hidden;font-size:10px;scroll-behavior:smooth;}
                     })
                 })
             }
-            var touchEnd = function(){
+            self.touchEnd = function(){
                 $('.card_cont').off('touchend').on('touchend', function(e){
                     if(!$('.card_cont').hasClass('card_control') && !$('.card_cont').hasClass('card_open')){
                         if((move_Y - start_Y) < 0){
@@ -129,10 +129,10 @@ html{overflow:hidden;font-size:10px;scroll-behavior:smooth;}
                     }
                 })
             }
-            this.init = function(){
-                touchStart();
-                touchMove();
-                touchEnd();
+            self.init = function(){
+                self.touchStart();
+                self.touchMove();
+                self.touchEnd();
             }
         }
         
