@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+button{border:0;background:none;}    
+html{overflow:hidden;font-size:10px;scroll-behavior:smooth;}
+.main{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;position:absolute;top:0;right:0;left:0;height:100%}
+.card_all{overflow:hidden;position:relative;height:100%;}
+.card_tit{margin-left:1.5rem;padding-top:1rem;font-size:2.2rem;font-weight:700}
+.card_cont_wrap{margin-top:2rem}
+.card_cont_wrap .card_cont:first-child{margin-top:0;border-top:0}
+.card_cont{position: relative;height:20rem;margin-top:-19rem;padding:0 2rem;transition:all .5s ease-out .3s;}
+.card_cont_wrap .card_cont:nth-child(1){z-index:10}
+.card_cont_wrap .card_cont_divider:nth-child(2){z-index:20}
+.card_cont_wrap .card_cont:nth-child(3){z-index:30}
+.card_cont_wrap .card_cont_divider:nth-child(4){z-index:40}
+.card_cont_wrap .card_cont:nth-child(5){z-index:50}
+.card_cont_wrap .card_cont_divider:nth-child(6){z-index:60}
+
+.card_cont .top_card{position: relative;z-index:10;height:17rem;padding:1.5rem;border-radius:1rem;color:#fff;transform:translateY(0);transition:all .3s ease-out;}
+.card_cont_wrap .card_cont:nth-child(1) .top_card{background-color: aquamarine;}
+.card_cont_wrap .card_cont:nth-child(3) .top_card{background-color: tomato;}
+.card_cont_wrap .card_cont:nth-child(5) .top_card{background-color: teal;}
+
+.card_cont .top_card .btn_open{opacity:1;position:absolute;right:1.5rem;bottom:5rem;z-index:10;color:#fff;font-size:1.5rem;transition:all 0.3s;}
+.card_cont .top_card .btn_close{opacity:0;position:absolute;right:1.5rem;bottom:2rem;z-index:10;color:#fff;font-size:1.5rem;transition:all 0.3s;}
+.card_cont_wrap .card_cont.card_open .btn_open{opacity:0;z-index:-10}
+.card_cont_wrap .card_cont.card_open .btn_close{opacity:1;z-index:10}
+
+.card_cont .top_card .card_name{font-size:1.8rem;font-weight:500;}
+.card_cont .top_card .alim_num{position:absolute;right:1.5rem;top:1.5rem;font-size:2.7rem;transition:all .3s ease-in-out .5s}
+
+.card_cont_divider{position:relative;height:22rem;margin-top:-6rem;border-top:1px solid #ccc;border-radius:1.5rem 1.5rem 0 0;background-color:#fff;transition:all .5s ease-in-out .2s}
+.card_body_wrap{display:none;overflow-y:auto;position:absolute;left:0;top:20rem;width:100%;max-height:calc(100% - 20rem);}
+.card_body_wrap .card_body{display:none;font-size:2rem;}
+.card_body_wrap .card_body .card_body_inner{padding:1.5rem}
+</style>
+
+<script>
+    (function($){
+        var CardEvent = function(){
+            var self = this;
+            var is_move = false;
+            var start_Y;
+            var move_Y;
+            var moving_Y;
+
+            self.open = function(cont){
+                var conts = $(cont);
+                var contIdx = $('.card_cont').index(conts);
+                var moveTop = conts.offset().top;
+                conts.addClass('card_open card_control').css({
+                    padding : 0,
+                    transform : `translateY(-${moveTop}px)`
+                }).find('.top_card').css({
+                    borderRadius : 0,
+                    height : '20rem',
+                    transform : 'translateY(0)'
+                })
+                .end().siblings().each(function(i,el){
+                    var moveBottom = $(window).height() - $(el).offset().top;
+                    $(el).css({
+                        transform : `translateY(${moveBottom}px)`
+                    })
+                })
+                $('.card_body_wrap').show().find('.card_body').eq(contIdx).delay(300).fadeIn(300, function(){
+                    conts.removeClass('card_control');
+                })
+            }
+            self.close = function(cont){
+                var conts = $(cont);
+                var contIdx = $('.card_cont').index(conts);
+                conts.addClass('card_control').removeAttr('style')
+                .find('.top_card').removeAttr('style').end().siblings().each(function(i,el){
+                    $(el).removeAttr('style');
+                });
+                $('.card_body_wrap').hide().find('.card_body').fadeOut(function(){
+                    conts.removeClass('card_open card_control');
+                })
+            }
+            var touchStart = function(){
+                $('.card_cont').off('touchstart').on('touchstart', function(e){
+                    start_Y = e.originalEvent.touches[0].clientY;
+                })
+            }
+            var touchMove = function(){
+                $('.card_cont').off('touchmove').on('touchmove', function(e){
+                    move_Y = e.originalEvent.touches[0].clientY;
+                    if(!$('.card_cont').hasClass('card_open')){
+                        if((move_Y - start_Y) > 0){
+                            moving_Y = 30;
+                        }else {
+                            moving_Y = -30;
+                        }
+                    } else{
+                        if((move_Y - start_Y) < 0){
+                            moving_Y = 0;
+                        }else {
+                            moving_Y = 30;
+                        }
+                    }
+
+                    $(this).find('.top_card').css({
+                        transform : `translateY(${moving_Y}px)`
+                    })
+                })
+            }
+            var touchEnd = function(){
+                $('.card_cont').off('touchend').on('touchend', function(e){
+                    if(!$('.card_cont').hasClass('card_control') && !$('.card_cont').hasClass('card_open')){
+                        if((move_Y - start_Y) < 0){
+                            self.open($(this));
+                        }
+                    }
+
+                    if(!$('.card_cont').hasClass('card_control')){
+                        if((move_Y - start_Y) > 0){
+                            self.close($(this));
+                        }
+                    }
+                })
+            }
+            this.init = function(){
+                touchStart();
+                touchMove();
+                touchEnd();
+            }
+        }
+        
+        $(function(){
+            var cardEvent = new CardEvent();
+            cardEvent.init();
+        })
+    })(jQuery)
+</script>
+
+</head>
+<body>
+    <div class="main">
+        <div class="card_all">
+            <p class="card_tit">파우치</p>
+            <div class="card_cont_wrap">
+                <div class="card_cont">
+                    <div class="top_card">
+                        <p class="card_name">고지서</p>
+                        <p class="alim_num">3</p>
+                        <button type="button" class="btn_open">펼치기</button>
+                        <button type="button" class="btn_close">접기</button>
+                    </div>
+                </div>
+                <div class="card_cont_divider"></div>
+                <div class="card_cont">
+                    <div class="top_card">
+                        <p class="card_name">증명서</p>
+                        <p class="alim_num">2</p>
+                        <button type="button" class="btn_open">펼치기</button>
+                        <button type="button" class="btn_close">접기</button>
+                    </div>
+                </div>
+                <div class="card_cont_divider"></div>
+                <div class="card_cont">
+                    <div class="top_card">
+                        <p class="card_name">자격증</p>
+                        <p class="alim_num">1</p>
+                        <button type="button" class="btn_open">펼치기</button>
+                        <button type="button" class="btn_close">접기</button>
+                    </div>
+                </div>
+                <div class="card_cont_divider"></div>
+            </div>    
+
+            <div class="card_body_wrap">
+                <div class="card_body">
+                    <div class="card_body_inner">
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                        내용1<br>
+                    </div>
+                </div>
+                <div class="card_body">
+                    <div class="card_body_inner">
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                        내용2<br>
+                    </div>
+                </div>
+                <div class="card_body">
+                    <div class="card_body_inner">
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                        내용3<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
