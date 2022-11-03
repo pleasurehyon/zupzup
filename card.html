@@ -69,7 +69,7 @@ html{overflow:hidden;font-size:10px;scroll-behavior:smooth;}
                 .end().siblings().each(function(i,el){
                     var moveBottom = $(window).height() - $(el).offset().top;
                     $(el).css({
-                        transform : `translateY(${moveBottom}px)`
+                        transform : `translateY(${moveBottom}px) scale(1)`
                     })
                 })
                 $('.card_body_wrap').show().find('.card_body').eq(contIdx).delay(300).fadeIn(300, function(){
@@ -95,22 +95,27 @@ html{overflow:hidden;font-size:10px;scroll-behavior:smooth;}
             self.touchMove = function(){
                 $('.card_cont').off('touchmove').on('touchmove', function(e){
                     move_Y = e.originalEvent.touches[0].clientY;
+                    var scale = 1;
                     if(!$('.card_cont').hasClass('card_open')){
                         if((move_Y - start_Y) > 0){
-                            moving_Y = 30;
+                            moving_Y = 40;
+                            scale = .95;
                         }else {
-                            moving_Y = -30;
+                            moving_Y = -40;
+                            scale = 1.05;
                         }
                     } else{
                         if((move_Y - start_Y) < 0){
                             moving_Y = 0;
+                            scale = 1;
                         }else {
-                            moving_Y = 30;
+                            moving_Y = 40;
+                            scale = 0.95;
                         }
                     }
 
                     $(this).find('.top_card').css({
-                        transform : `translateY(${moving_Y}px)`
+                        transform : `translateY(${moving_Y}px) scale(${scale})`
                     })
                 })
             }
