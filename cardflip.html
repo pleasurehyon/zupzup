@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body,html{width:100%;height:100%;font-size:1rem}
+        ul,li{list-style:none}
+        button{border:0;background-color:transparent;font-size:0;}
+        .section{margin-top:2rem;padding:0 1.5rem}
+        .list_card{position:relative;width:99.9%;padding-top:46.5%;background:#fff;font-size:0;}
+        .link_card{position:absolute;top:0;width:33.3%;height:100%;background-color:tomato;border:1px solid #000;}
+        .link_card:nth-child(1){left:0}
+        .link_card:nth-child(2){left:33.3%}
+        .link_card:nth-child(3){left:66.6%}
+        .link_card button{display:block;width:100%;height:100%;background-color:tomato;}
+        .link_card.clone{z-index:-1;}
+    </style>
+</head>
+<body>
+<section class="section">
+    <ul class="list_card">
+        <li class="link_card frt"><button type="button">첫 번재 카드</button></li>
+        <li class="link_card"><button type="button">두 번재 카드</button></li>
+        <li class="link_card lst"><button type="button">세 번재 카드</button></li>
+    </ul>
+</section>
+<script>
+var Game = function(){
+    var that = this;
+    that.listcard = '.list_card';
+    that.linkcard = '.link_card';
+    that.clonecard = 7;
+    that.speed = 120;
+    that.clone = function(){
+        var clone = '';
+        for(let i=0; i<that.clonecard; i++){
+            clone += '<li class="link_card clone"><button type="button">복제 카드</button></li>';
+        }
+        $(that.listcard).append(clone).find('.clone').css({
+            'left' : $(that.listcard).find('.lst').css('left')
+        })
+    }
+    that.choice = function(card){
+        that.clone();
+        $(that.linkcard).each(function(idx, elem){
+            that.shuffle(idx,elem);
+        })
+    }
+    that.shuffle = function(idx,elem){
+        var i = idx;
+        var el = elem;
+        $(el).stop().animate({
+            'left' :'24%'
+        }, that.speed, function(){
+            $(el).css({'z-index' : 'auto'});
+            ;(function(j){
+                setTimeout(function(){
+                    $(el).stop().animate({
+                        'left' : '55%',
+                        'top' : '20px'
+                    }, that.speed, function(){
+                        $(el).css({'z-index' : 10});
+                        console.log(24 + (j * 2) + '%')
+                        $(el).stop().animate({
+                            'left' : 24 + (j * 2) + '%',
+                            'top' : 0
+                        })
+                    })
+                }, j * that.speed)
+            })(i)
+        })
+
+    }
+}
+$(function(){
+    var game = new Game();
+    $('.link_card button').on('click', function(){
+        game.choice($(this).parent());
+    })
+})
+</script>
+</body>
+</html>
