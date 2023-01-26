@@ -7,6 +7,9 @@
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="datepicker.js"></script>
+    <style>
+        input:focus{border:1px solid red}
+    </style>
 </head>
 <body>
     <p>Date2: <input type="text" id="datepicker" title="시작일 선택" placeholder="날짜선택" value="2023.04.23"></p>
@@ -19,8 +22,13 @@ $( function() {
         changeYear: false, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
         showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
         dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
-        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] 
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+       
     });
+
+    $(document).on('click', '.ui-datepicker-close' ,function(){
+        $("#datepicker").focus().css('color','green');
+    })
 } );
 </script>
 </body>
