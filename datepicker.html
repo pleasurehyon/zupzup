@@ -31,7 +31,10 @@ $( function() {
         $("#datepicker").focus().css('color','green');
     })
 
-    $('#test').focus();
+    setTimeout(function(){
+        $('#test').focus();
+        $('#test').click();
+    },1000)
 
 } );
 </script>
