@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+    <input type="text" id="test"> 
     <p>Date2: <input type="text" id="datepicker" title="시작일 선택" placeholder="날짜선택" value="2023.04.23"></p>
 <script>
 $( function() {
@@ -29,6 +30,9 @@ $( function() {
     $(document).on('click', '.ui-datepicker-close' ,function(){
         $("#datepicker").focus().css('color','green');
     })
+
+    $('#test').focus();
+
 } );
 </script>
 </body>
