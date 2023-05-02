@@ -1,25 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-function Segment({name, id, title, index, defaultIndex = 0}){
-  const [radio, setRadio] = useState(defaultIndex)
-  const handleRadio = (index) => {
-    setRadio(index)
-  }
-
-  useEffect(() => {
-   
-    
-  },[radio]);
-  
+function Segment({groupname, id, title, segmentChked, setSegmentChked, idx}){
   return( 
       <>
         <input 
           type="radio" 
-          name={name} 
+          name={groupname} 
           id={id} 
           value={id} 
-          checked={radio === index} 
-          onChange={ ()=> setRadio(index) } 
+          checked={segmentChked === idx} 
+          onChange={ ()=> setSegmentChked(idx) } 
         />
         <label for={id}>{title}</label>
       </>
