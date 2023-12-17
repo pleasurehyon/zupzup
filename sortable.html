@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lottie</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.1/Sortable.min.js"></script>
+    <style>
+        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+        article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {display:block;}
+        html {box-sizing:border-box;box-sizing:border-box;}
+        *,*:before,*:after {box-sizing:inherit;}
+        body {line-height:1.6;}
+        body.popup-open {overflow:hidden;}
+        img {vertical-align:top;}
+        ol,ul,li {list-style:none;}
+
+        .sortable__group {padding:20px;}
+        .sortable__item {position:relative;display:flex;align-items:center;padding:10px 10px 10px 40px;background:#fff;border:1px solid silver;border-radius:6px;}
+        .sortable__item ~ .sortable__item {margin-top:10px}
+        .sortable--handle {position:absolute;top:12px;width:20px;height:20px;left:10px;background:rebeccapurple}
+        .sortable__btns {z-index:10;position:absolute;right:10px;top:8px;cursor:-webkit-grabbing;}
+    </style>
+</head>
+<body>
+    <div class="sortable__group">
+        <ul class="sortable__list" id="sortable__list">
+            <li class="sortable__item">
+                <span class="sortable__item--name">list1</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+            <li class="sortable__item">
+                <span class="sortable__item--name">list2</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+            <li class="sortable__item">
+                <span class="sortable__item--name">list3</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+            <li class="sortable__item">
+                <span class="sortable__item--name">list4</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sortable__group">
+        <ul class="sortable__list" id="sortable__list2">
+            <li class="sortable__item">
+                <span class="sortable__item--name">list1</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+            <li class="sortable__item">
+                <span class="sortable__item--name">list2</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+            <li class="sortable__item">
+                <span class="sortable__item--name">list3</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+            <li class="sortable__item">
+                <span class="sortable__item--name">list4</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+            <li class="sortable__item">
+                <span class="sortable__item--name">list5</span>
+                <span class="sortable--handle" aria-hidden="true"></span>
+                <div class="sortable__btns">
+                    <button type="button" class="sortable__btns--up">▲</button>
+                    <button type="button" class="sortable__btns--down">▼</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+<script>
+    var sortableFunc = function(){
+        var sortable = document.querySelectorAll('.sortable__list');
+        //setting
+        !(function(){
+            var option = {
+                handle: '.sortable--handle',
+                animation: 150,
+                onChange: function(/**Event*/evt) {
+                    sortableAccessibility();
+                }
+            } 
+            $(sortable).each(function(idx, el){
+                new Sortable(el, option);
+            });
+            sortableAccessibility();
+        })();
+
+        function sortableAccessibility (){
+            $(sortable).each(function(i, el){
+                $(el).find('li').each(function(idx){
+                    var length = $(el).find('li:not(.sortable-drag)').length;
+                    var btnUP = $(this).find('.sortable__btns--up');
+                    var btnDOWN = $(this).find('.sortable__btns--down');
+                    if(idx === 0) {
+                        btnUP.attr('disabled', true);
+                        btnUP.removeAttr('title');
+                    } else {
+                        btnUP.attr('disabled', false);
+                        btnUP.attr('title', '계좌순서를 ' + (idx) + '번째로 변경합니다.');
+                    }
+                    if(idx === (length-1)){
+                        btnDOWN.attr('disabled', true);
+                        btnUP.removeAttr('title');
+                    } else {
+                        btnDOWN.attr('disabled', false);
+                        btnDOWN.attr('title', '계좌순서를 ' + (idx+2) + '번째로 변경합니다.');
+        
+                    }
+                })
+            })
+        }
+        function sortableClickEvt(parent, type){
+            if(type === 'up') {
+                parent.prev().before(parent);
+                
+            } else {
+                parent.next().after(parent);
+            }
+            sortableAccessibility();
+        }
+
+        $('.sortable__btns button').on('click', function(){
+            var parent = $(this).parents('li');
+            var type = $(this).attr('class').split('btns--')[1];
+            sortableClickEvt(parent, type);
+        })
+    }
+    $(function(){
+        sortableFunc();
+    })   
+    
+
+    // function sortableAccessibility(){
+    //     $(sortable).each(function(i, el){
+    //         $(el).find('li').each(function(idx, elem){
+    //             var length = $(el).find('li:not(.sortable-drag)').length;
+    //             var btnUP = $(this).find('.sortable__btns--up');
+    //             var btnDOWN = $(this).find('.sortable__btns--down');
+    //             if(idx === 0) {
+    //                 btnUP.attr('disabled', true)
+    //             } else {
+    //                 btnUP.attr('disabled', false)
+    //                 btnUP.attr('title', '계좌순서를 ' + (idx) + '번째로 변경합니다.')
+    //             }
+    //             if(idx === (length-1)){
+    //                 btnDOWN.attr('disabled', true)
+    //             } else {
+    //                 btnDOWN.attr('disabled', false)
+    //                 btnDOWN.attr('title', '계좌순서를 ' + (idx+2) + '번째로 변경합니다.')
+    
+    //             }
+    //         })
+    //     })
+    // }
+    // function sortableClick(parent, type){
+    //     if(type === 'up') {
+    //         parent.prev().before(parent)
+            
+    //     } else {
+    //         parent.next().after(parent)
+    //     }
+    //     sortableAccessibility();
+    // }
+
+   
+
+</script>
+</body>
+</html>
