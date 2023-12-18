@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lottie</title>
+    <link rel="stylesheet" href="/css/svgevent.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="/js/slick.js"></script>
+    <script src="/js/lottie.js"></script>
+    <script src="/js/svgevent.js"></script>
+</head>
+<body>
+    <div class="prodmall-sub">
+        <div class="box"></div>
+        <div class="sub-menu-wrap top-fixed">
+            <div class="sub-menu-inner">
+                <ul class="sub-menu">
+                    <li class="on"><a href="#recommendation01" data-ecrm="BOT4010">입출금</a></li><!-- 2022-11-03 data-ecrm 변경 -->
+                    <li><a href="#recommendation02" data-ecrm="BOT4020">적금</a></li><!-- 2022-11-03 data-ecrm 변경 -->
+                    <li><a href="#recommendation03" data-ecrm="BOT4030">예금</a></li><!-- 2022-11-03 data-ecrm 변경 -->
+                    <li><a href="#recommendation04" data-ecrm="BOT4040">환전</a></li><!-- 2022-11-03 data-ecrm 변경 -->
+                    <li><a href="#recommendation05" data-ecrm="BOT4050">송금</a></li><!-- 2022-11-03 data-ecrm 변경 -->
+                </ul>
+            </div>
+        </div>
+        <div id="recommendation01" class="recommendation-prod">
+            <div>
+                <div class="box">recommendation01</div>
+                <a href="#" class="main-white-box">
+                    <div id="mainRecomBann01" class="icon-svg-area"></div>
+                    <em>개인종합자산관리계좌</em><strong class="title">효율적 자산관리<br>전략적 절세방법</strong>
+                </a>
+                <div class="box"></div>
+            </div>
+        </div>
+        <div id="recommendation02" class="recommendation-prod">
+            <div>
+                <div class="box">recommendation02</div>
+                <a href="#" class="main-white-box">
+                    <div id="mainRecomBann02" class="icon-svg-area"></div>
+                    <em>개인종합자산관리계좌</em><strong class="title">효율적 자산관리<br>전략적 절세방법</strong>
+                </a>
+            </div>
+        </div>
+        <div id="recommendation03" class="recommendation-prod">
+            <div>
+                <div class="box">recommendation03</div>
+                <a href="#" class="main-white-box">
+                    <div id="mainRecomBann03" class="icon-svg-area"></div>
+                    <em>개인종합자산관리계좌</em><strong class="title">효율적 자산관리<br>전략적 절세방법</strong>
+                </a>
+            </div>
+        </div>
+        <div id="recommendation04" class="recommendation-prod">
+            <div>
+                <div class="box">recommendation04</div>
+                <a href="#" class="main-white-box">
+                    <div id="mainRecomBann04" class="icon-svg-area"></div>
+                    <em>개인종합자산관리계좌</em><strong class="title">효율적 자산관리<br>전략적 절세방법</strong>
+                </a>
+                <div class="box"></div>
+            </div>
+        </div>
+        <div id="recommendation05" class="recommendation-prod">
+            <div>
+                <div class="box" style="height:400px">recommendation05</div>
+                <a href="#" class="main-white-box">
+                    <div id="mainRecomBann05" class="icon-svg-area"></div>
+                    <em>개인종합자산관리계좌</em><strong class="title">효율적 자산관리<br>전략적 절세방법</strong>
+                </a>
+                <div class="box" style="height:200px"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            hanaProdUI.setSVGApply('#mainRecomBann01', '/json/mainRecomBann01.json', true, true);
+            hanaProdUI.setSVGApply('#mainRecomBann02', '/json/mainRecomBann02.json', true, true);
+            hanaProdUI.setSVGApply('#mainRecomBann03', '/json/mainRecomBann03.json', true, true);
+            hanaProdUI.setSVGApply('#mainRecomBann04', '/json/mainRecomBann04.json', true, true);
+            hanaProdUI.setSVGApply('#mainRecomBann05', '/json/mainRecomBann05.json', true, true);
+            hanaProdUI.ankerArea('.sub-menu-wrap.top-fixed');
+        })
+    </script>
+</body>
+</html>
